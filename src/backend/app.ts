@@ -1,4 +1,5 @@
 import * as express from 'express'
+var path = require('path');
 
 class App {
     public express: any;
@@ -10,11 +11,14 @@ class App {
 
     private mountRoutes (): void {
         const router = express.Router();
+
         router.get('/', (req, res) => {
-            res.json({
-                message: 'Hello World!'
-            })
+            res.sendFile(path.resolve('frontend/index.html'));
         });
+        router.get('/frontend.bundle.js', (req, res) => {
+            res.sendFile(path.resolve('../dist/frontend.bundle.js'));
+        });
+
         this.express.use('/', router)
     }
 }
