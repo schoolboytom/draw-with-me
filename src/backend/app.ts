@@ -19,6 +19,10 @@ class App {
             res.sendFile(path.resolve('../dist/frontend.bundle.js'));
         });
 
+        router.all('*', function(req, res) {
+            res.sendFile(path.resolve('frontend/index.html'));
+        });
+
         this.express.use('/', router)
     }
 }
