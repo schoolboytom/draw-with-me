@@ -1,5 +1,7 @@
 import * as express from 'express'
-var path = require('path');
+import indexRoutes from './controllers/index.controller';
+import fileRoutes from './controllers/files.controller';
+import userRoutes from './controllers/user.controller';
 
 class App {
     public express: any;
@@ -10,20 +12,9 @@ class App {
     }
 
     private mountRoutes (): void {
-        const router = express.Router();
-
-        router.get('/', (req, res) => {
-            res.sendFile(path.resolve('frontend/index.html'));
-        });
-        router.get('/frontend.bundle.js', (req, res) => {
-            res.sendFile(path.resolve('../dist/frontend.bundle.js'));
-        });
-
-        router.all('*', function(req, res) {
-            res.sendFile(path.resolve('frontend/index.html'));
-        });
-
-        this.express.use('/', router)
+        this.express.use('/', indexRoutes);
+        this.express.use('/files', fileRoutes);
+        this.express.use('/user', userRoutes);
     }
 }
 
